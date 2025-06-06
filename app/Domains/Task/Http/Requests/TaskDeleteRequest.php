@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Domains\User\Http\Requests;
+namespace App\Domains\Task\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserDeleteRequest extends FormRequest
+class TaskDeleteRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'userId' => 'required|int|exists:users,id',
+            'taskId' => 'required|int|exists:tasks,id',
         ];
     }
 
@@ -22,7 +22,7 @@ class UserDeleteRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $this->merge(['userId' => $this->route('user')]);
+        $this->merge(['taskId' => $this->route('task')]);
     }
 
 }

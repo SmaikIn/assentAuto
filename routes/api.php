@@ -1,7 +1,10 @@
 <?php
 
+use App\Models\Task;
+
 require __DIR__.'/../app/Domains/User/Routes/api.php';
 require __DIR__.'/../app/Domains/Auth/Routes/api.php';
+require __DIR__.'/../app/Domains/Task/Routes/api.php';
 /*
 |--------------------------------------------------------------------------
 | API Routes
