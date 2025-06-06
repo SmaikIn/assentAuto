@@ -17,21 +17,31 @@ class UserObserver implements ShouldQueue
 
     public function created(User $user): void
     {
-        $this->meilisearch->getIndex('users')->addDocuments($user->toArray());
+        $this->addOrUpdateDoc($user);
     }
 
     public function updated(User $user): void
     {
-        $this->meilisearch->getIndex('users')->addDocuments($user->toArray());
+        $this->addOrUpdateDoc($user);
     }
 
     public function saved(User $user): void
     {
-        $this->meilisearch->getIndex('users')->addDocuments($user->toArray());
+        $this->addOrUpdateDoc($user);
     }
 
     public function deleted(User $user): void
     {
         $this->meilisearch->getIndex('users')->deleteDocument($user->id);
+    }
+
+    private function addOrUpdateDoc(User $user): void
+    {
+        $data = $user->toArray();
+
+        $data['status']['id'] = $user->status->id;
+        $data['status']['name'] = $user->status->name;
+        $data['status']['slug'] = $user->status->slug;
+        $this->meilisearch->getIndex('users')->addDocuments($data);
     }
 }

@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domains\User\Http\Controllers;
 
+use App\Domains\Shared\Responses\JsonApiResponse;
+use App\Domains\Shared\Responses\JsonErrorResponse;
 use App\Domains\Shared\Responses\OpenApi\Errors\OpenApiResponseNotFound;
 use App\Domains\Shared\Responses\OpenApi\Errors\OpenApiResponseUnauthorized;
 use App\Domains\Shared\Responses\OpenApi\Errors\OpenApiResponseValidateError;
 use App\Domains\Shared\Responses\OpenApi\OpenApiResponseError;
+use App\Domains\Shared\Responses\OpenApi\OpenApiResponseItem;
 use App\Domains\User\Dto\UserDto;
+use App\Domains\User\Enum\UserStatus;
 use App\Domains\User\Http\Requests\UserCreateRequest;
 use App\Domains\User\Http\Requests\UserDeleteRequest;
 use App\Domains\User\Http\Requests\UserUpdateRequest;
@@ -17,9 +21,6 @@ use App\Domains\User\Service\UserService;
 use App\Domains\User\ValueObject\Email;
 use App\Domains\User\ValueObject\Password;
 use App\Http\Controllers\Controller;
-use App\Domains\Shared\Responses\JsonApiResponse;
-use App\Domains\Shared\Responses\JsonErrorResponse;
-use App\Domains\Shared\Responses\OpenApi\OpenApiResponseItem;
 use Illuminate\Support\Carbon;
 use InvalidArgumentException;
 use OpenApi\Attributes\Delete;
@@ -83,6 +84,7 @@ class UserController extends Controller
                 id: null,
                 name: $request->input('name'),
                 email: Email::create($request->input('email')),
+                userStatus: UserStatus::Working,
                 password: Password::create($request->input('password')),
                 createdAt: null,
                 updatedAt: null
@@ -152,6 +154,7 @@ class UserController extends Controller
             id: $request->input('userId'),
             name: $request->input('name'),
             email: Email::create($request->input('email')),
+            userStatus: UserStatus::tryFrom($request->input('status')),
             password: null,
             createdAt: null,
             updatedAt: Carbon::now()

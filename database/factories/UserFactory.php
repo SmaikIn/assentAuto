@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Domains\User\ValueObject\Password;
+use App\Models\Status;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -23,6 +24,7 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
+            'status_id' => Status::inRandomOrder()->first()->id,
             'email_verified_at' => now(),
             'password' => Password::create(Password::generate())->getHashValue(),
             'remember_token' => Str::random(10),

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domains\User\Http\Requests;
 
+use App\Domains\User\Enum\UserStatus;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserUpdateRequest extends FormRequest
@@ -11,9 +12,10 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userId' => 'sometimes|int|exists:users,id',
-            'name' => 'sometimes|string|max:255',
-            'email' => 'sometimes|email|unique:users,email',
+            'userId' => 'required|int|exists:users,id',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'status' => 'required|string|in:'.implode(',', [UserStatus::Vacation->value, UserStatus::Working->value]),
         ];
     }
 

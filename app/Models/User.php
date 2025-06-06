@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -44,14 +45,9 @@ class User extends Authenticatable implements JWTSubject
         'password' => 'hashed',
     ];
 
-    public function cartItems(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function status(): BelongsTo
     {
-        return $this->hasMany(CartItem::class);
-    }
-
-    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Order::class);
+        return $this->belongsTo(Status::class);
     }
 
     public function getJWTIdentifier(): mixed
