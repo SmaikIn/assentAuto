@@ -39,6 +39,8 @@ class UserObserver implements ShouldQueue
     {
         $data = $user->toArray();
 
+        unset($data['status_id']);
+
         $data['status']['id'] = $user->status->id;
         $data['status']['name'] = $user->status->name;
         $data['status']['slug'] = $user->status->slug;

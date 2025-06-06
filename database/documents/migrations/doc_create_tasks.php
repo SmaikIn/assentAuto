@@ -11,12 +11,12 @@ return new class extends Migration {
         $key = config('database.connections.documents.key');
         $client = new \Meilisearch\Client($host, $key);
 
-        $client->createIndex('users', ['primaryKey' => 'id']);
-        $client->index('users')->updateFilterableAttributes([
+        $client->createIndex('tasks', ['primaryKey' => 'id']);
+        $client->index('tasks')->updateFilterableAttributes([
             'id',
-            'name',
-            'email',
+            'title',
             'status',
+            'users',
             'created_at',
             'updated_at',
         ]);
@@ -28,6 +28,6 @@ return new class extends Migration {
         $key = config('database.connections.documents.key');
 
         $client = new \Meilisearch\Client($host, $key);
-        $client->deleteIndex('users');
+        $client->deleteIndex('tasks');
     }
 };

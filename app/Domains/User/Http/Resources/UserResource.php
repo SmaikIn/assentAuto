@@ -30,6 +30,7 @@ class UserResource extends JsonResource
             'id' => $this->resource->getId(),
             'firstName' => $this->resource->getName(),
             'email' => $this->resource->getEmail()->getValue(),
+            'status' => $this->resource->getUserStatus()->value,
             'createdAt' => $this->resource->getCreatedAt()->toIso8601String(),
             'updatedAt' => $this->resource->getUpdatedAt()->toIso8601String(),
         ];

@@ -2,7 +2,13 @@
 
 namespace App\Providers;
 
+use App\Domains\Task\Events\FindUserByIdEvent;
+use App\Domains\Task\Events\TaskCreatedEvent;
+use App\Domains\Task\Listeners\TaskCreatedListener;
+use App\Domains\Task\Observers\TaskObserver;
+use App\Domains\User\Listeners\FindUserByIdListener;
 use App\Domains\User\Observers\UserObserver;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -19,6 +25,12 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        FindUserByIdEvent::class => [
+            FindUserByIdListener::class,
+        ],
+        TaskCreatedEvent::class => [
+            TaskCreatedListener::class,
+        ],
     ];
 
     /**
@@ -27,6 +39,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot(): void
     {
         User::observe(UserObserver::class);
+        Task::observe(TaskObserver::class);
         //
     }
 

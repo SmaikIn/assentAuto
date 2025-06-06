@@ -15,6 +15,13 @@ use Throwable;
 final class UserRepository
 {
 
+    public function find(int $userId): UserDto
+    {
+        $user = User::findOrFail($userId);
+
+        return $this->_formatDto($user);
+    }
+
     /**
      * @param  UserDto  $registerDto
      * @return UserDto
