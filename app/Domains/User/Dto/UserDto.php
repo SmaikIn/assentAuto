@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domains\User\Dto;
 
 
+use App\Domains\User\Enum\UserStatus;
 use App\Domains\User\ValueObject\Email;
 use App\Domains\User\ValueObject\Password;
 use Carbon\Carbon;
@@ -15,6 +16,7 @@ final class UserDto
         private ?int $id,
         private string $name,
         private Email $email,
+        private UserStatus $userStatus,
         private ?Password $password,
         private ?Carbon $createdAt,
         private ?Carbon $updatedAt,
@@ -80,6 +82,16 @@ final class UserDto
     public function setUpdatedAt(Carbon $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    public function getUserStatus(): UserStatus
+    {
+        return $this->userStatus;
+    }
+
+    public function setUserStatus(UserStatus $userStatus): void
+    {
+        $this->userStatus = $userStatus;
     }
 
 }
